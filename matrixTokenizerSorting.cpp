@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <algorithm>
 using namespace std;
 
 struct TokenFreq {
@@ -10,6 +11,14 @@ struct TokenFreq {
 
 bool operator <= ( TokenFreq& ob1, TokenFreq& ob2 ) {
     if ( ob1.freq <= ob2.freq ) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool operator < ( TokenFreq& ob1, TokenFreq& ob2 ) {
+    if ( ob1.freq < ob2.freq ) {
         return true;
     } else {
         return false;
@@ -98,15 +107,28 @@ void print( vector<TokenFreq> tfVec ) {
     }
 }
 
+void selectionSort( vector<TokenFreq> & tokFreqVector ) {
+    TokenFreq *min;
+    for ( int i = 0; i < tokFreqVector.size(); i++ ) {
+        min = &tokFreqVector.at( i );
+        for ( int j = i; j < tokFreqVector.size(); j++ ) {
+            if ( tokFreqVector.at( j ) < *min ) {
+                min = &tokFreqVector.at( j );
+            }
+        }
+        swap( tokFreqVector.at( i ), *min );
+    }
+}
+
 int main() {
     vector< vector<int> > matrix;
     int numRows, numCols;
     numRows = 1;
     numCols = 2;
     matrixInit( matrix, numRows, numCols );
-
+    // string sample = "hello hello hello hi hi hey";
     string sample = "And no, I'm not a walking C++ dictionary. I do not keep every technical detail in my head at all times. If I did that, I would be a much poorer programmer. I do keep the main points straight in my head most of the time, and I do know where to find the details when I need them. by Bjarne Stroustrup";
     vector<TokenFreq> tfVec;
     getTokenFreqVec( sample, tfVec );
-    print( tfVec );
+    selectionSort( tfVec );
 }
