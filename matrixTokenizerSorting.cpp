@@ -53,6 +53,9 @@ void matrixInit( vector< vector<int> >& matrix, int numRows, int numCols) {
     matrix.resize(numRows);
     for( int i = 0; i < numRows; i++ ) {
         matrix[i] = vector<int>(numCols);
+        for( int j = 0; j < numCols; j++) {
+           matrix[i][j] = 1;
+       }
     }
 }
 
@@ -62,7 +65,7 @@ vector<string> getTokens( string& istr ) {
     string buffer = "";
     int startIndex = 0;
     int endIndex = 0;
-    for (int i = 0; i < istr.length(); i++ ) {
+    for (unsigned int i = 0; i < istr.length(); i++ ) {
         current = istr.at( i );
         if ( current == ' ' ) {
             endIndex = i;
@@ -86,7 +89,7 @@ string toLowerCase( string& token ) {
 void processToken( string token, vector<TokenFreq> & tfVec ) {
     TokenFreq newToken;
     string currentToken;
-    for ( int i = 0; i < tfVec.size(); i++ ) {
+    for ( unsigned int i = 0; i < tfVec.size(); i++ ) {
         currentToken = tfVec.at( i ).token;
         if( toLowerCase( token ) == toLowerCase( currentToken ) ) {
             tfVec.at( i ).freq += 1;
@@ -100,22 +103,22 @@ void processToken( string token, vector<TokenFreq> & tfVec ) {
 
 void getTokenFreqVec( string& istr, vector<TokenFreq> & tfVec ) {
     vector<string> tokens = getTokens( istr );
-    for ( int i = 0; i < tokens.size(); i++ ) {
+    for ( unsigned int i = 0; i < tokens.size(); i++ ) {
         processToken( tokens.at(i), tfVec );
     }
 }
 
 void print( vector<TokenFreq> tfVec ) {
-    for( int i = 0; i < tfVec.size(); i++ ) {
+    for( unsigned int i = 0; i < tfVec.size(); i++ ) {
         cout << tfVec.at( i ) << endl;
     }
 }
 
 void selectionSort( vector<TokenFreq> & tokFreqVector ) {
     TokenFreq *min;
-    for ( int i = 0; i < tokFreqVector.size(); i++ ) {
+    for ( unsigned int i = 0; i < tokFreqVector.size(); i++ ) {
         min = &tokFreqVector.at( i );
-        for ( int j = i; j < tokFreqVector.size(); j++ ) {
+        for ( unsigned int j = i; j < tokFreqVector.size(); j++ ) {
             if ( tokFreqVector.at( j ) < *min ) {
                 min = &tokFreqVector.at( j );
             }
@@ -127,7 +130,7 @@ void selectionSort( vector<TokenFreq> & tokFreqVector ) {
 void insertionSort( vector<TokenFreq> & tokFreqVector ) {
     TokenFreq x;
     int index;
-    for ( int i = 1; i < tokFreqVector.size(); i++ ) {
+    for ( unsigned int i = 1; i < tokFreqVector.size(); i++ ) {
         x = tokFreqVector.at(i);
         index = i;
         while ( index > 0 && tokFreqVector.at( index -1 ) > x ) {
@@ -148,9 +151,9 @@ int main() {
     string sample = "And no, I'm not a walking C++ dictionary. I do not keep every technical detail in my head at all times. If I did that, I would be a much poorer programmer. I do keep the main points straight in my head most of the time, and I do know where to find the details when I need them. by Bjarne Stroustrup";
     vector<TokenFreq> tfVec;
     getTokenFreqVec( sample, tfVec );
-    print( tfVec );
-    // selectionSort( tfVec );
+    // print( tfVec );
+    selectionSort( tfVec );
     cout << endl;
-    insertionSort( tfVec );
+    // insertionSort( tfVec );
     print( tfVec );
 }
