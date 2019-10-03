@@ -71,7 +71,9 @@ vector<string> getTokens( string& istr ) {
             endIndex = i;
             buffer = istr.substr( startIndex, (endIndex - startIndex) );
             startIndex = endIndex + 1;
-            tokens.push_back( buffer );
+            if ( buffer != "" ) {
+                tokens.push_back( buffer );
+            }
         } else if ( i == istr.length() -1 ) {
             endIndex = i +1;
             buffer = istr.substr( startIndex, (endIndex - startIndex) );
@@ -147,8 +149,10 @@ int main() {
     numRows = 3;
     numCols = 4;
     matrixInit( matrix, numRows, numCols );
+    // string sample = "     ";
+    string sample = "hello    world    baby";
     // string sample = "hello hello hi hi hi hey";
-    string sample = "And no, I'm not a walking C++ dictionary. I do not keep every technical detail in my head at all times. If I did that, I would be a much poorer programmer. I do keep the main points straight in my head most of the time, and I do know where to find the details when I need them. by Bjarne Stroustrup";
+    // string sample = "And no, I'm not a walking C++ dictionary. I do not keep every technical detail in my head at all times. If I did that, I would be a much poorer programmer. I do keep the main points straight in my head most of the time, and I do know where to find the details when I need them. by Bjarne Stroustrup";
     vector<TokenFreq> tfVec;
     getTokenFreqVec( sample, tfVec );
     // print( tfVec );
