@@ -25,6 +25,14 @@ bool operator < ( TokenFreq& ob1, TokenFreq& ob2 ) {
     }
 }
 
+bool operator > ( TokenFreq& ob1, TokenFreq& ob2 ) {
+    if ( ob1.freq > ob2.freq ) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 TokenFreq operator + ( TokenFreq& ob1, TokenFreq& ob2 ) {
     TokenFreq result;
     if( ob1.token.compare( ob2.token ) != 0 ) {
@@ -120,15 +128,35 @@ void selectionSort( vector<TokenFreq> & tokFreqVector ) {
     }
 }
 
+void insertionSort( vector<TokenFreq> & tokFreqVector ) {
+    // vector<TokenFreq> sorted;
+    // sorted.push_back( tokFreqVector.at(0) );
+    TokenFreq x;
+    int index;
+    for ( int i = 1; i < tokFreqVector.size(); i++ ) {
+        x = tokFreqVector.at(i);
+        index = i;
+        while ( index > 0 && tokFreqVector.at( index -1 ) > x ) {
+            tokFreqVector.at( index ) = tokFreqVector.at( index - 1 );
+            index -= 1;
+        }
+        tokFreqVector.at( index ) = x;
+    }
+}
+
 int main() {
     vector< vector<int> > matrix;
     int numRows, numCols;
     numRows = 1;
     numCols = 2;
     matrixInit( matrix, numRows, numCols );
-    // string sample = "hello hello hello hi hi hey";
+    // string sample = "hello hello hi hi hi hey";
     string sample = "And no, I'm not a walking C++ dictionary. I do not keep every technical detail in my head at all times. If I did that, I would be a much poorer programmer. I do keep the main points straight in my head most of the time, and I do know where to find the details when I need them. by Bjarne Stroustrup";
     vector<TokenFreq> tfVec;
     getTokenFreqVec( sample, tfVec );
-    selectionSort( tfVec );
+    print( tfVec );
+    // selectionSort( tfVec );
+    cout << endl;
+    insertionSort( tfVec );
+    print( tfVec );
 }
