@@ -54,7 +54,7 @@ void matrixInit( vector< vector<int> >& matrix, int numRows, int numCols) {
     for( int i = 0; i < numRows; i++ ) {
         matrix[i] = vector<int>(numCols);
         for( int j = 0; j < numCols; j++) {
-           matrix[i][j] = 1;
+           matrix[i][j] = i * j;
        }
     }
 }
@@ -144,8 +144,8 @@ void insertionSort( vector<TokenFreq> & tokFreqVector ) {
 int main() {
     vector< vector<int> > matrix;
     int numRows, numCols;
-    numRows = 1;
-    numCols = 2;
+    numRows = 3;
+    numCols = 4;
     matrixInit( matrix, numRows, numCols );
     // string sample = "hello hello hi hi hi hey";
     string sample = "And no, I'm not a walking C++ dictionary. I do not keep every technical detail in my head at all times. If I did that, I would be a much poorer programmer. I do keep the main points straight in my head most of the time, and I do know where to find the details when I need them. by Bjarne Stroustrup";
