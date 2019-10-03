@@ -39,28 +39,74 @@ void matrixInit( vector< vector<int> >& matrix, int numRows, int numCols) {
     }
 }
 
-void getTokenFreqVec( string& istr, vector<TokenFreq> & tfVec) {
+vector<string> getTokens( string& istr ) {
+    vector<string> tokens;
+    char current;
+    string buffer = "";
+    int startIndex = 0;
+    int endIndex = 0;
+    for (int i = 0; i < istr.length(); i++ ) {
+        current = istr.at( i );
+        if ( current == ' ' ) {
+            endIndex = i;
+            buffer = istr.substr( startIndex, (endIndex - startIndex) );
+            startIndex = endIndex + 1;
+            tokens.push_back( buffer );
+        } else if ( i == istr.length() -1 ) {
+            endIndex = i +1;
+            buffer = istr.substr( startIndex, (endIndex - startIndex) );
+            tokens.push_back( buffer );
+        }
+    }
+    return tokens;
+}
 
+string toLowerCase( string& token ) {
+    transform( token.begin(), token.end(), token.begin(), ::tolower);
+    return token;
+}
+
+void processToken( string token, vector<TokenFreq> & tfVec ) {
+    TokenFreq newToken;
+    string currentToken;
+    for ( int i = 0; i < tfVec.size(); i++ ) {
+        currentToken = tfVec.at( i ).token;
+        if( toLowerCase( token ) == toLowerCase( currentToken ) ) {
+            tfVec.at( i ).freq += 1;
+            return;
+        }
+    }
+    newToken.token = token;
+    newToken.freq = 1;
+    tfVec.push_back( newToken );
+}
+
+/*  istr ==> input string
+    tfVec ==> used to store the list of unique and case insensitive tokens
+                    and their corresponding frequencies identified within istr
+*/
+void getTokenFreqVec( string& istr, vector<TokenFreq> & tfVec ) {
+    vector<string> tokens = getTokens( istr );
+    for ( int i = 0; i < tokens.size(); i++ ) {
+        processToken( tokens.at(i), tfVec );
+    }
+}
+
+void print( vector<TokenFreq> tfVec ) {
+    for( int i = 0; i < tfVec.size(); i++ ) {
+        cout << tfVec.at( i ) << endl;
+    }
 }
 
 int main() {
     vector< vector<int> > matrix;
     int numRows, numCols;
+    numRows = 1;
+    numCols = 2;
     matrixInit( matrix, numRows, numCols );
 
-    TokenFreq test1;
-    TokenFreq test2;
-    TokenFreq test3;
-    test1.token = "hello";
-    test1.freq = 12;
-    test2.token = "world";
-    test2.freq = 8;
-
-    test1 = test1 + test2;
-
-    cout << test1.token << endl;
-    cout << test1.freq << endl;
-    cout << test1 << endl;
-    cout << test2 << endl;
-
+    string sample = "And no, I'm not a walking C++ dictionary. I do not keep every technical detail in my head at all times. If I did that, I would be a much poorer programmer. I do keep the main points straight in my head most of the time, and I do know where to find the details when I need them. by Bjarne Stroustrup";
+    vector<TokenFreq> tfVec;
+    getTokenFreqVec( sample, tfVec );
+    print( tfVec );
 }
