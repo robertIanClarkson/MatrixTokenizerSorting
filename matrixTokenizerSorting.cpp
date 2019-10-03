@@ -98,10 +98,6 @@ void processToken( string token, vector<TokenFreq> & tfVec ) {
     tfVec.push_back( newToken );
 }
 
-/*  istr ==> input string
-    tfVec ==> used to store the list of unique and case insensitive tokens
-                    and their corresponding frequencies identified within istr
-*/
 void getTokenFreqVec( string& istr, vector<TokenFreq> & tfVec ) {
     vector<string> tokens = getTokens( istr );
     for ( int i = 0; i < tokens.size(); i++ ) {
@@ -129,8 +125,6 @@ void selectionSort( vector<TokenFreq> & tokFreqVector ) {
 }
 
 void insertionSort( vector<TokenFreq> & tokFreqVector ) {
-    // vector<TokenFreq> sorted;
-    // sorted.push_back( tokFreqVector.at(0) );
     TokenFreq x;
     int index;
     for ( int i = 1; i < tokFreqVector.size(); i++ ) {
